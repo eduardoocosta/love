@@ -219,7 +219,99 @@
     background: rgba(255,255,255,0.2);
   }
 
-  /* ---------- GALLERY / CAROUSEL ---------- */
+  /* ---------- SONG MOMENT ---------- */
+  .song-section{ text-align:center; }
+  .song-card{
+    margin: 40px auto 0;
+    max-width: 460px;
+    background: var(--paper);
+    border-radius: 22px;
+    padding: 36px 24px;
+    box-shadow: var(--shadow);
+  }
+  .vinyl{
+    width: 132px; height:132px;
+    margin: 0 auto 22px;
+    border-radius:50%;
+    position:relative;
+    background:
+      radial-gradient(circle at center, var(--paper) 0 8px, transparent 8.5px),
+      repeating-radial-gradient(circle at center, #241318 0, #241318 2px, #34181f 3px, #34181f 4px);
+    box-shadow: 0 14px 30px -10px rgba(90,20,40,0.4), inset 0 0 0 1px rgba(255,255,255,0.06);
+    animation: spin 6s linear infinite;
+    animation-play-state: paused;
+    cursor:pointer;
+  }
+  .vinyl.spin{ animation-play-state: running; }
+  .vinyl::before{
+    content:"";
+    position:absolute; inset:0;
+    margin:auto;
+    width: 44%; height:44%;
+    border-radius:50%;
+    background: var(--wine);
+  }
+  .vinyl::after{
+    content:"";
+    position:absolute; inset:0;
+    margin:auto;
+    width: 10%; height:10%;
+    border-radius:50%;
+    background: var(--paper);
+  }
+  @keyframes spin{ to{ transform: rotate(360deg); } }
+
+  .song-card .eyebrow{ justify-content:center; }
+  .song-card h2{
+    font-size: clamp(1.5rem, 5.5vw, 1.9rem);
+    color: var(--wine-deep);
+  }
+  .song-card .song-name{
+    margin-top: 6px;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    color: var(--wine);
+    font-size: 1.05rem;
+  }
+  .song-card p.story{
+    margin-top: 18px;
+    line-height: 1.75;
+    color: var(--ink);
+    text-align:left;
+  }
+  .song-links{
+    margin-top: 24px;
+    display:flex;
+    flex-direction:column;
+    gap: 12px;
+  }
+  .song-link{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 8px;
+    text-decoration:none;
+    font-weight:700;
+    font-size:.92rem;
+    padding: 12px 18px;
+    border-radius: 999px;
+    transition: transform .15s ease, opacity .15s ease;
+  }
+  .song-link:active{ transform: scale(.97); }
+  .song-link.spotify{ background:#1DB954; color:#0B2F1A; }
+  .song-link.youtube{ background: var(--wine); color:#fff; }
+  .song-hint{
+    margin-top: 14px;
+    font-size:.75rem;
+    color: var(--wine);
+    opacity:.5;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+  }
+
+
   .story-head{ text-align:center; }
   .story-head .eyebrow{ margin-bottom: 22px; }
   .story-head h2{ font-size: clamp(1.8rem, 6vw, 2.3rem); color:var(--wine-deep); }
@@ -543,6 +635,22 @@
     <div class="scrolldown">role pra ver ↓</div>
   </section>
 
+  <!-- SONG MOMENT -->
+  <section class="song-section">
+    <div class="eyebrow" style="justify-content:center">como tudo começou</div>
+    <div class="song-card">
+      <div class="vinyl" id="vinyl" onclick="toggleSpin()"></div>
+      <h2>A nossa música</h2>
+      <div class="song-name">"Contramão" — Gustavo Mioto</div>
+      <p class="story">A gente se conheceu pelo Instagram, do jeito mais improvável possível. No nosso primeiro encontro, um açaí simples, resolvi cantar essa música pra você, ali, sem cerimônia. Quando cheguei em casa, mandei a mesma faixa te contando que passei o caminho todo pensando em você. De lá pra cá, toda vez que ela toca, é como se a gente voltasse direto pra aquela mesa de açaí.</p>
+      <div class="song-links">
+        <a class="song-link spotify" href="https://open.spotify.com/intl-pt/track/18W54IOnlCrgObh3jK9SfK" target="_blank" rel="noopener">🎧 Ouvir no Spotify</a>
+        <a class="song-link youtube" href="https://www.youtube.com/watch?v=5iUoik-9hVI" target="_blank" rel="noopener">▶ Assistir no YouTube</a>
+      </div>
+      <div class="song-hint">toque no vinil</div>
+    </div>
+  </section>
+
   <!-- COUNTER -->
   <section class="counter-wrap">
     <div class="stars-bg"></div>
@@ -736,6 +844,10 @@
     document.getElementById('lightbox').classList.remove('show');
   }
   document.getElementById('lightboxImg').addEventListener('click', (e) => e.stopPropagation());
+
+  function toggleSpin(){
+    document.getElementById('vinyl').classList.toggle('spin');
+  }
 
   function openEnvelope(){
     const env = document.getElementById('envelope');
